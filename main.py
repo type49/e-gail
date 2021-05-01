@@ -7,13 +7,12 @@ from threading import Thread
 import keyboard
 import easygui as eg
 
-
 from drag_and_drop_processing import drop_event
-from text_processing import input_text
+import text_processing as tp
 
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtCore import Qt, QEventLoop, QTimer, pyqtSlot
+from PyQt5.QtCore import Qt, QEventLoop, QTimer
 from PyQt5.QtWidgets import QWidget, QApplication, QSystemTrayIcon, QAction, QMenu
 from queenui import Ui_MainWindow
 
@@ -33,7 +32,7 @@ class MyWin(QtWidgets.QMainWindow, QWidget):
         self.ui.queenBrowser.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint | Qt.Tool)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
-        self.ui.queenBrowser.setText(random.choice(input_text('data/answers/start.txt')))
+        self.ui.queenBrowser.setText(random.choice(tp.start_messages))
         self.tray_icon()
 
     def keyPressEvent(self, e):
@@ -46,15 +45,14 @@ class MyWin(QtWidgets.QMainWindow, QWidget):
     def start_dialogue(self):
         answer = re.split('[-.?!)(,: ]', self.ui.textBrowser.text().lower())
         self.ui.textBrowser.clear()
-        hellows = ''.join(input_text(r'data/answers/hello.txt')).lower()
         print(answer)
-        if answer[0] in hellows and len(answer) < 20:
-            self.ui.queenBrowser.setText(random.choice(input_text('data/answers/hello.txt')) +
+        if answer[0] in tp.hellows and len(answer) < 20:
+            self.ui.queenBrowser.setText(random.choice(tp.hellows) +
             random.choice(['', '!', ' ^-^', ' :з', ' (¬‿¬)', ' (✿◠‿◠)', ' (*・ω・)ﾉ ', '. Наверное.', ' <3']))
-        if 'вопрос' in answer:
-            self.ui.queenBrowser.setText(random.choice(input_text('data/answers/asking_start.txt')))
+        elif 'вопрос' in answer:
+            self.ui.queenBrowser.setText(random.choice(tp.start_ask))
             self.asking_42()
-        if ''.join(answer) == 'help':
+        elif ''.join(answer) == 'help':
             eg.msgbox('''
             Я - Эгель. Милый асистент в просирании времени в интернете. 
             Можешь поздороваться. Да. Можешь задать любой вопрос. Только сначала скажи - хочу, мол, 
@@ -72,9 +70,9 @@ class MyWin(QtWidgets.QMainWindow, QWidget):
         ask = self.ui.textBrowser.text().lower()
         self.ui.textBrowser.clear()
         if ask:
-            self.ui.queenBrowser.setText(random.choice(input_text('data/answers/ball42.txt')))
+            self.ui.queenBrowser.setText(random.choice(tp.ball42))
             if ask == 'хватит':
-                self.ui.queenBrowser.setText(random.choice(input_text('data/answers/start.txt')))
+                self.ui.queenBrowser.setText(random.choice(tp.start_messages))
                 self.keySwitcher = 0
 
     def dragEnterEvent(self, event):
@@ -91,12 +89,6 @@ class MyWin(QtWidgets.QMainWindow, QWidget):
 
     def close_app_foo(self):
         self.ui.textBrowser.clear()
-        self.ui.queenBrowser.setText(random.choice(input_text('data/answers/exitApp.txt')))
-
-        loop = QEventLoop()
-        QTimer.singleShot(2000, loop.quit)
-        loop.exec()
-
         sys.exit()
 
     def tray_icon(self):
