@@ -1,0 +1,17 @@
+beautifulsoup4==4.9.3
+bs4==0.0.1
+certifi==2020.12.5
+chardet==4.0.0
+clipboard==0.0.4
+easygui==0.98.2
+idna==2.10
+keyboard==0.13.5
+Pillow==8.2.0
+pyperclip==1.8.2
+PyQt5==5.15.4
+PyQt5-Qt5==5.15.2
+PyQt5-sip==12.8.1
+PyQt5-stubs==5.15.2.0
+requests==2.25.1
+soupsieve==2.2.1
+urllib3==1.26.4
