@@ -46,11 +46,24 @@ class Ui_MainWindow(object):
             self.textBrowser.setGeometry(10, 390, 410, 33)
             self.queenBrowser.setGeometry(160, 300, 250, 60)
         elif backgroundImage == 'default':
-            self.textBrowser.setStyleSheet(
-                'font: 14pt "Tahoma"; background-color: rgb(240, 255, 255); color: rgb(54, 63, 66);')
-            self.queenBrowser.setStyleSheet('font: 11pt "Tahoma";')
-            self.textBrowser.setGeometry(170, 383, 251, 41)
-            self.queenBrowser.setGeometry(200, 190, 222, 71)
+            self.textBrowser.setStyleSheet('''
+                                                font: 10pt "Montserrat Alternates";
+                                                background-color: #414547;
+                                                color: #efe2cd;
+                                                padding: 5;
+                                                border: 1px solid #f09ea3;
+                                                border-radius: 10px;
+                                                    ''')
+            self.queenBrowser.setStyleSheet('''
+                                                font: 10pt "Montserrat Alternates";
+                                                background-color: #414547;
+                                                color: #efe2cd;
+                                                padding: 5;
+                                                border: 1px solid #f09ea3;
+                                                border-radius: 10px;
+                                                    ''')
+            self.textBrowser.setGeometry(10, 390, 410, 33)
+            self.queenBrowser.setGeometry(160, 300, 250, 60)
 
         self.background = QtWidgets.QLabel(self.centralwidget)
         self.background.resize(424, 433)
