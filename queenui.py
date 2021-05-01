@@ -25,56 +25,51 @@ class Ui_MainWindow(object):
         self.queenBrowser.setReadOnly(True)
         self.queenBrowser.setObjectName('queenBrowser')
 
-
-        if backgroundImage == 'dark':
-            self.textBrowser.setStyleSheet('''
-                                    font: 10pt "Montserrat Alternates";
-                                    background-color: #414547;
-                                    color: #efe2cd;
-                                    padding: 5;
-                                    border: 1px solid #f09ea3;
-                                    border-radius: 10px;
-                                        ''')
-            self.queenBrowser.setStyleSheet('''
-                                    font: 10pt "Montserrat Alternates";
-                                    background-color: #414547;
-                                    color: #efe2cd;
-                                    padding: 5;
-                                    border: 1px solid #f09ea3;
-                                    border-radius: 10px;
-                                        ''')
-            self.textBrowser.setGeometry(10, 390, 410, 33)
-            self.queenBrowser.setGeometry(160, 300, 250, 60)
-        elif backgroundImage == 'default':
-            self.textBrowser.setStyleSheet('''
-                                                font: 10pt "Montserrat Alternates";
-                                                background-color: #414547;
-                                                color: #efe2cd;
-                                                padding: 5;
-                                                border: 1px solid #f09ea3;
-                                                border-radius: 10px;
-                                                    ''')
-            self.queenBrowser.setStyleSheet('''
-                                                font: 10pt "Montserrat Alternates";
-                                                background-color: #414547;
-                                                color: #efe2cd;
-                                                padding: 5;
-                                                border: 1px solid #f09ea3;
-                                                border-radius: 10px;
-                                                    ''')
-            self.textBrowser.setGeometry(10, 390, 410, 33)
-            self.queenBrowser.setGeometry(160, 300, 250, 60)
-
         self.background = QtWidgets.QLabel(self.centralwidget)
         self.background.resize(424, 433)
-        if backgroundImage == 'default':
-            self.background.setStyleSheet("image: url(data/images/background.png);")
-        if backgroundImage == 'dark':
-            self.background.setStyleSheet("image: url(data/images/background2.png);")
-        if backgroundImage == 'creep':
-            self.background.setStyleSheet("image: url(data/images/background3.png);")
-        if backgroundImage == 'music':
-            self.background.setStyleSheet("image: url(data/images/background4.png);")
+
+        if backgroundImage == 'pink':
+            self.background.setStyleSheet("image: url(data/images/pink.png);")
+            self.textBrowser.setStyleSheet('''
+                                    font: 10pt "Montserrat Alternates";
+                                    background-color: #414547;
+                                    color: #efe2cd;
+                                    padding: 5;
+                                    border: 1px solid #f09ea3;
+                                    border-radius: 10px;
+                                        ''')
+            self.queenBrowser.setStyleSheet('''
+                                    font: 10pt "Montserrat Alternates";
+                                    background-color: #414547;
+                                    color: #efe2cd;
+                                    padding: 5;
+                                    border: 1px solid #f09ea3;
+                                    border-radius: 10px;
+                                        ''')
+            self.textBrowser.setGeometry(10, 390, 410, 33)
+            self.queenBrowser.setGeometry(160, 300, 250, 60)
+
+        elif backgroundImage == 'blue':
+            self.background.setStyleSheet("image: url(data/images/blue.png);")
+            self.textBrowser.setStyleSheet('''
+                                                font: 10pt "Montserrat Alternates";
+                                                background-color: #414547;
+                                                color: #efe2cd;
+                                                padding: 5;
+                                                border: 1px solid #3f81a1;
+                                                border-radius: 10px;
+                                                    ''')
+            self.queenBrowser.setStyleSheet('''
+                                                font: 10pt "Montserrat Alternates";
+                                                background-color: #414547;
+                                                color: #efe2cd;
+                                                padding: 5;
+                                                border: 1px solid #3f81a1;
+                                                border-radius: 10px;
+                                                    ''')
+            self.textBrowser.setGeometry(100, 390, 310, 33)
+            self.queenBrowser.setGeometry(160, 320, 250, 60)
+
 
         MainWindow.setCentralWidget(self.centralwidget)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
