@@ -9,6 +9,8 @@ import easygui as eg
 
 from drag_and_drop_processing import drop_event
 import text_processing as tp
+import saved_data_manager
+from saved_data_manager import DataManagerWindow
 
 from PyQt5.QtGui import QIcon
 from PyQt5 import QtWidgets, QtCore
@@ -97,10 +99,18 @@ class MyWin(QtWidgets.QMainWindow, QWidget):
 
     def keyPressEvent(self, e):
         if e.key() == QtCore.Qt.Key_Return and len(self.ui.textBrowser.text()) > 2:
+            self.content_manager = DataManagerWindow()
+            saved_data_manager.move_right_bottom_corner(self.content_manager)
+            self.content_manager.show()
             if self.keySwitcher == 0:
                 self.start_dialogue()
             if self.keySwitcher == 1:
                 self.asking_42()
+
+    def call_data_manager(self):
+        self.content_manager = DataManagerWindow()
+        saved_data_manager.move_right_bottom_corner(self.content_manager)
+        self.content_manager.show()
 
     def start_dialogue(self):
         answer = re.split('[-.?!)(,: ]', self.ui.textBrowser.text().lower())
@@ -159,6 +169,8 @@ class MyWin(QtWidgets.QMainWindow, QWidget):
         tray_exit_action.triggered.connect(QtWidgets.QApplication.quit)
         tray_settings_action = QAction("Настройки", self)
         tray_settings_action.triggered.connect(self.settings_foo)
+        tray_datamanager_action = QAction("Менеджер контента", self)
+        tray_datamanager_action.triggered.connect(self.call_data_manager)
 
         tray_menu = QMenu()
         tray_menu.setStyleSheet('''
@@ -167,6 +179,7 @@ class MyWin(QtWidgets.QMainWindow, QWidget):
                             color: #efe2cd;
                             border: 1px solid #f09ea3;
                                 ''')
+        tray_menu.addAction((tray_datamanager_action))
         tray_menu.addAction(tray_settings_action)
         tray_menu.addAction(tray_exit_action)
         self.tray_icon.setContextMenu(tray_menu)
