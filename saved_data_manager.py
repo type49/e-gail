@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import configparser
+
 from PIL import Image
 import sys, os
 from PyQt5 import QtWidgets
@@ -9,6 +11,14 @@ from PyQt5.QtWidgets import QApplication, QWidget, QAction, QLabel, QPushButton,
 import webbrowser
 import clipboard
 import json
+
+config = configparser.ConfigParser()
+config.read(r'data\settings.ini')
+app_theme = config.get("Theme", "theme")
+if app_theme == 'pink':
+    app_theme = 'data/data_pink.qss'
+if app_theme == 'blue':
+    app_theme = 'data/data_blue.qss'
 
 
 def html_open(url):
@@ -24,6 +34,7 @@ class DataManagerWindow(QWidget):
         super(QWidget, self).__init__()
         self.window_width = 450
         self.window_height = 730
+        self.setObjectName('main_window')
 
         self.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
         self.setAttribute(Qt.WA_TranslucentBackground, True)
@@ -39,60 +50,15 @@ class DataManagerWindow(QWidget):
         self.button.clicked.connect(self.reverse_data_foo)
 
         self.exit_button = QPushButton("х")
-        self.exit_button.setStyleSheet('''QPushButton
-                                    {font: 12pt "Montserrat Alternates";
-                                    background-color: #292f32;
-                                    color: #efe2cd;
-                                    padding: 5;
-                                    border: 1px solid #f4726e;
-                                    border-radius: 10px;
-                                    }
-                                    QPushButton:pressed
-                                    {font: 11pt "Montserrat Alternates";
-                                    background-color: #323335;
-                                    color: #efe2cd;
-                                    padding: 5;
-                                    border: 1px solid #f4726e;
-                                    border-radius: 10px;
-                                    }''')
+        self.exit_button.setObjectName('exit_button')
         self.exit_button.clicked.connect(self.close_app)
 
-        self.show_max_button = QPushButton("↓↓")
-        self.show_max_button.setStyleSheet('''QPushButton
-                                    {font: 12pt "Montserrat Alternates";
-                                    background-color: #292f32;
-                                    color: #efe2cd;
-                                    padding: 5;
-                                    border: 1px solid #f4726e;
-                                    border-radius: 10px;
-                                    }
-                                    QPushButton:pressed
-                                    {font: 11pt "Montserrat Alternates";
-                                    background-color: #323335;
-                                    color: #efe2cd;
-                                    padding: 5;
-                                    border: 1px solid #f4726e;
-                                    border-radius: 10px;
-                                    }''')
-        self.show_max_button.clicked.connect(self.reverse_data_foo)
+        self.reverse_button = QPushButton("↓↓")
+        self.reverse_button.setObjectName('reverse_button')
+        self.reverse_button.clicked.connect(self.reverse_data_foo)
 
         self.hide_button = QPushButton("-")
-        self.hide_button.setStyleSheet('''QPushButton
-                                    {font: 15pt "Montserrat Alternates";
-                                    background-color: #292f32;
-                                    color: #efe2cd;
-                                    padding: 5;
-                                    border: 1px solid #f4726e;
-                                    border-radius: 10px;
-                                    }
-                                    QPushButton:pressed
-                                    {font: 11pt "Montserrat Alternates";
-                                    background-color: #323335;
-                                    color: #efe2cd;
-                                    padding: 5;
-                                    border: 1px solid #f4726e;
-                                    border-radius: 10px;
-                                    }''')
+        self.hide_button.setObjectName('hide_button')
         self.hide_button.clicked.connect(self.showMinimized)
 
         self.vbox.addWidget(self.page_init())
@@ -101,7 +67,6 @@ class DataManagerWindow(QWidget):
     def page_init(self):
         page_widget = QtWidgets.QWidget()
         self.main_layout = QtWidgets.QVBoxLayout(page_widget)
-
         self.main_box = QVBoxLayout()
         self.scrollarea = QScrollArea()
         self.scrollarea.setWidgetResizable(True)
@@ -119,14 +84,7 @@ class DataManagerWindow(QWidget):
                 text_label.setOpenExternalLinks(True)
                 text_label.setContextMenuPolicy(Qt.ActionsContextMenu)
                 text_label.setFixedWidth(self.window_width - 30)
-                text_label.setStyleSheet('''
-                                        font: 13pt "Montserrat Alternates";
-                                        background-color: #414547;
-                                        color: #efe2cd;
-                                        padding: 5;
-                                        border: 1px solid #f09ea3;
-                                        border-radius: 10px;
-                                            ''')
+                text_label.setObjectName('text_label')
                 text_label.setText(f'''
                                     <p>{data_item}&nbsp;</p>
                                     <p style="text-align: right; font-size: 10px; color: #95a68b">{data_time}</p>
@@ -153,14 +111,7 @@ class DataManagerWindow(QWidget):
                 html_label.setOpenExternalLinks(True)
                 html_label.setWordWrap(True)
                 html_label.setFixedWidth(self.window_width - 30)
-                html_label.setStyleSheet('''
-                                    font: 13pt "Montserrat Alternates";
-                                    background-color: #414547;
-                                    color: #e0b88b;
-                                    padding: 2;
-                                    border: 1px solid #f09ea3;
-                                    border-radius: 10px;
-                                        ''')
+                html_label.setObjectName('html_label')
                 html_label.setText(f'''
                                     <p>{data_item}</p>
                                     <p style="text-align: right; font-size: 10px; color: #95a68b">{data_time}</p>
@@ -191,14 +142,7 @@ class DataManagerWindow(QWidget):
                     image_label = QLabel()
                     image_label.setContextMenuPolicy(Qt.ActionsContextMenu)
                     image_label.setFixedWidth(self.window_width - 30)
-                    image_label.setStyleSheet('''
-                                        font: 13pt "Montserrat Alternates";
-                                        background-color: #414547;
-                                        color: #efe2cd;
-                                        padding: 5;
-                                        border: 1px solid #f09ea3;
-                                        border-radius: 10px;
-                                            ''')
+                    image_label.setObjectName('image_label')
                     image_label.setText(f'''
                                         <p><img src="{data_item}" alt="" width="{self.window_width - 60}" /></p>
                                         <p style="text-align: right; font-size: 10px; color: #95a68b">{data_time}</p>
@@ -219,14 +163,7 @@ class DataManagerWindow(QWidget):
                 gif_label = QLabel()
                 gif_label.setContextMenuPolicy(Qt.ActionsContextMenu)
                 gif_label.setFixedWidth(self.window_width - 30)
-                gif_label.setStyleSheet('''
-                                    font: 13pt "Montserrat Alternates";
-                                    background-color: #414547;
-                                    color: #efe2cd;
-                                    padding: 5;
-                                    border: 1px solid #f09ea3;
-                                    border-radius: 10px;
-                                        ''')
+                gif_label.setObjectName('gif_label')
 
                 if os.path.exists(data_item):
                     self.gif_item = QMovie(data_item)
@@ -261,7 +198,7 @@ class DataManagerWindow(QWidget):
                     self.delete_data_foo(data_line, 'x_flag')
 
         self.button_box = QHBoxLayout()
-        self.button_box.addWidget(self.show_max_button)
+        self.button_box.addWidget(self.reverse_button)
         self.button_box.addWidget(self.hide_button)
         self.button_box.addWidget(self.exit_button)
 
@@ -275,71 +212,8 @@ class DataManagerWindow(QWidget):
             self.scrollarea.setFixedHeight(self.scrollarea.viewportSizeHint().height())
         else:
             self.scrollarea.setFixedHeight(self.window_height)
-        self.scrollarea.setStyleSheet("""
-                                QScrollBar:vertical {
-                                    width: 14px;
-                                    margin: 16px 2px 16px 2px;       
-                                    border: 1px solid #f09ea3;
-                                    border-radius: 4px;
-                                }
-                                QScrollBar::handle:vertical {
-                                    background-color: #f1c1bf;     
-                                    border: 0px solid #31363B;
-                                    min-height: 8px;
-                                    border-radius: 4px;
-                                }
-                                QScrollBar::handle:vertical:hover {
-                                    background-color: #f4726e;      
-                                    border: 0px solid #179AE0;
-                                    border-radius: 4px;
-                                    min-height: 8px;
-                                }
-                                QScrollBar::sub-line:vertical {
-                                    margin: 3px 0px 3px 0px;
-                                    border-image: url(icons/up_arrow_disabled.png);
-                                    height: 10px;
-                                    width: 10px;
-                                    subcontrol-position: top;
-                                    subcontrol-origin: margin;
-                                }
-                                QScrollBar::add-line:vertical {
-                                    margin: 3px 0px 3px 0px;
-                                    border-image: url(icons/down_arrow_disabled.png);
-                                    height: 10px;
-                                    width: 10px;
-                                    subcontrol-position: bottom;
-                                    subcontrol-origin: margin;
-                                }
-                                QScrollBar::sub-line:vertical:hover,
-                                QScrollBar::sub-line:vertical:on {
-                                    border-image: url(icons/up_arrow.png);
-                                    height: 10px;
-                                    width: 10px;
-                                    subcontrol-position: top;
-                                    subcontrol-origin: margin;
-                                }
-                                QScrollBar::add-line:vertical:hover,
-                                QScrollBar::add-line:vertical:on {
-                                    border-image: url(/icons/down_arrow.png);
-                                    height: 10px;
-                                    width: 10px;
-                                    subcontrol-position: bottom;
-                                    subcontrol-origin: margin;
-                                }
-                                QScrollBar::up-arrow:vertical,
-                                QScrollBar::down-arrow:vertical {
-                                    background: none;                   
-                                }
-                                QScrollBar::add-page:vertical,
-                                QScrollBar::sub-page:vertical {
-                                    background: none;                
-                                }
-                                """)
+        self.scrollarea.setObjectName('scrollarea')
         self.scrollarea.setFixedWidth(self.window_width + 10)
-        self.setStyleSheet('''
-                        background-color: transparent;
-                        border:none;
-                           ''')
         self.main_box.addWidget(self.scrollarea)
         self.main_layout.addLayout(self.main_box)
         return page_widget
@@ -381,7 +255,7 @@ class DataManagerWindow(QWidget):
         w.show()
 
     def close_app(self):
-        self.close()
+        self.hide()
 
 
 def move_right_bottom_corner(win):
@@ -392,9 +266,12 @@ def move_right_bottom_corner(win):
     y = screen_size[1] - win_size[1]
     win.move(x, y)
 
-
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
+    file = QtCore.QFile(app_theme)
+    file.open(QtCore.QFile.ReadOnly | QtCore.QFile.Text)
+    stream = QtCore.QTextStream(file)
+    app.setStyleSheet(stream.readAll())
     w = DataManagerWindow()
     move_right_bottom_corner(w)
     w.show()
