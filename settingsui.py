@@ -15,7 +15,7 @@ import configparser
 
 config = configparser.ConfigParser()
 config.read(r'data\settings.ini')
-backgroundImage = config.get("Theme", "background")
+backgroundImage = config.get("Theme", "theme")
 
 
 class Ui_SettingsWindow(object):

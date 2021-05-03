@@ -1,9 +1,33 @@
 [
   {
-    "gif_item": [
+    "text_item": [
       {
-        "content": "D:\\type49\\Python\\e-gail\\\\Downloads\\\\images\\\\2021-05-02-20-46-49.gif",
-        "time": "2021-05-02 | 20.46"
+        "content": "правильно ли я понял, что centralwidget и centralwidget из последнего комментария это имена этих объектов, объявленные в коде? Если да, то почему то не работает. Использовал QPushButton#exit_button для объекта self.exit_button = QPushButton(). Стиль не меняется, хотя файл прочитался нормально, принтом вывел. Мне создать новый вопрос или это относится к вашему ответу? – type49 1 минуту назад   Править   Удалить\n",
+        "time": "2021-05-03-05-03-55"
+      }
+    ]
+  },
+  {
+    "text_item": [
+      {
+        "content": "r: rgba(255, 134, 134, 150);}\nLoad the file above in your python file and apply that stylesheet with:\n\n    qss_file = open('style_file.qss').read()\n    ui.your_line_edit_control.setStyleSheet(qss_file)\nIf you want to edit stylesheet by QtDesigner, just put the\n\nQLineEdit{border-style: solid;\n        border-width: 1px;\n        border-radius: 5px;\n        border-color: rgb(125,125,125);\n        background-color: rgba(255, 134, 134, 150);}\nin the control right-clicking your control an selecting \"Edit Stylesheet\"\n\nNB: This style will work only for QLineEdit, like is specified in style code",
+        "time": "2021-05-03-06-15-57"
+      }
+    ]
+  },
+  {
+    "text_item": [
+      {
+        "content": "r: rgba(255, 134, 134, 150);}\nLoad the file above in your python file and apply that stylesheet with:\n\n    qss_file = open('style_file.qss').read()\n    ui.your_line_edit_control.setStyleSheet(qss_file)\nIf you want to edit stylesheet by QtDesigner, just put the\n\nQLineEdit{border-style: solid;\n        border-width: 1px;\n        border-radius: 5px;\n        border-color: rgb(125,125,125);\n        background-color: rgba(255, 134, 134, 150);}\nin the control right-clicking your control an selecting \"Edit Stylesheet\"\n\nNB: This style will work only for QLineEdit, like is specified in style code",
+        "time": "2021-05-03-06-16-16"
+      }
+    ]
+  },
+  {
+    "text_item": [
+      {
+        "content": "aObject.connectSlotsByName(MainWindow)\n\n   def __name(self):\n       name = self.fname.text() + \" \" + self.lname.text()\n       self.result.setText(\"\" + name + \"\")\n\n   def retranslate_gui(self, MainWindow):\n       _translate = QtCore.QCoreApplication.translate\n\n       MainWindow.setWindowTitle(_translate(\"MainWindow\", \"Name Concatenation\"))\n       self.lastname.setText(_translate(\"MainWindow\", \"Last Name :\"))\n       self.firstname.setText(_translate(\"MainWindow\", \"First Name :\"))\n       self.fullname.setText(_translate(\"MainWindow\", \"Concatenated Name :-\"))\n       self.result.setText(_translate(\"MainWindow\", \"\"))\n       self.showres.setText(_translate(\"MainWindow\", \"Show Name!\"))\n       self.clearall.setText(_tr",
+        "time": "2021-05-03-06-16-19"
       }
     ]
   }

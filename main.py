@@ -37,7 +37,7 @@ class SettingsWin(QtWidgets.QMainWindow, QWidget):
         self.ui.saveButton.clicked.connect(self.save_button)
         self.ui.cancelButton.clicked.connect(self.cancel_button)
 
-        self.ui.themeComboBox.setCurrentText(config.get("Theme", "background"))
+        self.ui.themeComboBox.setCurrentText(config.get("Theme", "theme"))
         self.ui.themeComboBox.activated.connect(self.set_theme_cb)
         self.ui.themeComboBox.activated.connect(self.set_theme_cb)
         self._old_pos = None
@@ -45,15 +45,15 @@ class SettingsWin(QtWidgets.QMainWindow, QWidget):
     on_theme_changed = pyqtSignal(str)
 
     def set_theme_cb(self):
-        background_image = config.get("Theme", "background")
+        background_image = config.get("Theme", "theme")
         self.on_theme_changed.emit(background_image)
         a = self.ui.themeComboBox.currentIndex()
         if a == 0:
-            config.set("Theme", "background", "blue")
+            config.set("Theme", "theme", "blue")
             with open(r'data\settings.ini', "w") as config_file:
                 config.write(config_file)
         elif a == 1:
-            config.set("Theme", "background", "pink")
+            config.set("Theme", "theme", "pink")
             with open(r'data\settings.ini', "w") as config_file:
                 config.write(config_file)
 
@@ -82,6 +82,16 @@ class SettingsWin(QtWidgets.QMainWindow, QWidget):
         self.move(self.pos() + delta)
 
 
+def call_data_manager():
+    twoWindow = TwoWindow()
+    twoWindow.show()
+
+
+class TwoWindow(QWidget):
+    def __inir__(self):
+        super().__init__()
+
+
 class MyWin(QtWidgets.QMainWindow, QWidget):
     keySwitcher = 0
 
@@ -106,11 +116,6 @@ class MyWin(QtWidgets.QMainWindow, QWidget):
                 self.start_dialogue()
             if self.keySwitcher == 1:
                 self.asking_42()
-
-    def call_data_manager(self):
-        self.content_manager = DataManagerWindow()
-        saved_data_manager.move_right_bottom_corner(self.content_manager)
-        self.content_manager.show()
 
     def start_dialogue(self):
         answer = re.split('[-.?!)(,: ]', self.ui.textBrowser.text().lower())
@@ -170,7 +175,7 @@ class MyWin(QtWidgets.QMainWindow, QWidget):
         tray_settings_action = QAction("Настройки", self)
         tray_settings_action.triggered.connect(self.settings_foo)
         tray_datamanager_action = QAction("Менеджер контента", self)
-        tray_datamanager_action.triggered.connect(self.call_data_manager)
+        tray_datamanager_action.triggered.connect(self.data_manager_foo)
 
         tray_menu = QMenu()
         tray_menu.setStyleSheet('''
@@ -203,6 +208,20 @@ class MyWin(QtWidgets.QMainWindow, QWidget):
         self.sw = SettingsWin()
         self.sw.show()
         self.sw.on_theme_changed.connect(self.set_theme_foo)
+
+    def data_manager_foo(self):
+        self.data_manager = DataManagerWindow()
+        app_theme = config.get("Theme", "theme")
+        if app_theme == 'pink':
+            app_theme = 'data/data_pink.qss'
+        if app_theme == 'blue':
+            app_theme = 'data/data_blue.qss'
+        file = QtCore.QFile(app_theme)
+        file.open(QtCore.QFile.ReadOnly | QtCore.QFile.Text)
+        stream = QtCore.QTextStream(file)
+        app.setStyleSheet(stream.readAll())
+        move_right_bottom_corner(self.data_manager)
+        self.data_manager.show()
 
 
     @pyqtSlot(str)
